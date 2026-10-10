@@ -74,6 +74,52 @@ or create a **private 1v1** and share the invite code.
 - The engine is deterministic and every game leaves a verifiable move-hash
   trail, so results can later be proven on-chain (`architecture/Blockchain-Portability.md`).
 
+## GATO and how the game shares its revenue
+
+GATO is Metarchy's in-game currency, and the way players share in the game's
+success.
+
+**Earn it by playing.** Every account starts with 1000 GATO. Ranked matches pay
+by placement (1v1: 30 to the winner, 10 to the loser; three players: 30 / 20 /
+10), and each finished game against bots or in the tutorial pays 5. Winners of
+ranked games also receive a random cosmetic item.
+
+**Use it.**
+
+- **Shop** — avatars, Actor skins, skin sets and argument-coin sets.
+- **Market** — buy and sell cosmetics with other players. Trades move GATO
+  between players; they never create or destroy it.
+- **Stake** — lock GATO to share in the game's revenue and vote on its rules.
+
+**Stake, don't burn.** GATO is never burned. Instead of destroying tokens to
+fight inflation, Metarchy gives players a reason to hold them: staking. Staked
+GATO is locked, with a 21-day unstaking period, and gives the holder:
+
+- **Voice Power** — a vote on changes to the game's rules;
+- **a share of the game's revenue**, in proportion to their share of all staked
+  GATO.
+
+**Where the revenue comes from, and where it goes.** Money that enters the game
+flows into one revenue pool that is paid out to stakers:
+
+- **Advertising** — an advertiser's spend goes to stakers, so watching ads pays
+  into the players' own stake rather than earning a token reward.
+- **Sponsorships** — a championship sponsor buys GATO to fund the prize instead
+  of paying out dollars, and that purchase supports the GATO price.
+- **Market fees** — the fee on player trades feeds the pool; it is not burned.
+
+Example: $100 of revenue enters the game. A player who holds 1% of all staked
+GATO receives $1.
+
+**Price.** GATO is not sold for money. It will get a market price once a
+GATO/USD liquidity pool exists; until then its price is zero, which is
+deliberate for the test phase.
+
+**Status.** Earning, the Shop and the Market are live in the current build.
+Staking, voting and revenue sharing are the next stage, and the Market is built
+toward them. The full design, with current amounts, is in
+[`plan/GATO-Tokenomics.md`](plan/GATO-Tokenomics.md).
+
 ## Development
 
 ```sh
