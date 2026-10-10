@@ -1,0 +1,31 @@
+{
+  "name": "@metarchy/e2e",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "dependencies": {
+    "@metarchy/engine": "workspace:*",
+    "@metarchy/protocol": "workspace:*",
+    "jose": "^6.2.3",
+    "ws": "^8.21.0"
+  },
+  "devDependencies": {
+    "@types/node": "^26.1.0",
+    "@types/pg": "^8.20.0",
+    "@types/ws": "^8.18.1",
+    "pg": "^8.22.0",
+    "playwright": "^1.61.1",
+    "tsx": "^4.23.0",
+    "vitest": "^3.2.7"
+  },
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run --passWithNoTests",
+    "smoke:client": "tsx scripts/client-smoke.ts",
+    "smoke:pvp": "tsx scripts/pvp-smoke.ts",
+    "load": "tsx scripts/load-test.ts"
+  }
+}

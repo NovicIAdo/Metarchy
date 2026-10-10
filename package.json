@@ -1,0 +1,26 @@
+{
+  "name": "metarchy",
+  "private": true,
+  "packageManager": "pnpm@11.5.2",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "start": "pnpm --filter @metarchy/client exec vite build && node scripts/play-local.mjs",
+    "lint": "eslint .",
+    "format": "prettier --check \"**/*.{ts,tsx,mjs,json,yaml,yml}\"",
+    "format:write": "prettier --write \"**/*.{ts,tsx,mjs,json,yaml,yml}\"",
+    "typecheck": "pnpm -r --if-present typecheck",
+    "test": "pnpm -r --if-present test",
+    "build": "pnpm -r --if-present build"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.15.0",
+    "eslint": "^9.15.0",
+    "prettier": "^3.3.3",
+    "typescript": "^5.6.3",
+    "typescript-eslint": "^8.15.0"
+  },
+  "license": "SEE LICENSE IN LICENSE",
+  "author": "Vladimir Understanding (@Antropocosmist)"
+}

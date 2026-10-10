@@ -1,0 +1,37 @@
+# OS
+.DS_Store
+
+# Dependencies & builds (for future code)
+node_modules/
+dist/
+build/
+*.log
+
+# Env & secrets
+.env
+.env.*
+# Client env files hold only public values (anon key, URLs) — keep them versioned
+!apps/client/.env.development
+!apps/client/.env.production
+!apps/client/.env.mobile
+
+# Local smoke artifacts
+e2e/screenshots/
+
+# Load-test key material and run results
+e2e/.loadtest/
+e2e/load-results/
+
+# Machine-specific tool configs
+.jcodemunch.jsonc
+.claude/settings.local.json
+.claude/scheduled_tasks.lock
+supabase/.temp/
+*.tsbuildinfo
+
+# Author's source art pack (212MB): local source like Meta_scratch, read by tooling from disk.
+# Originals live with the author; never commit binaries this size.
+plan/visual-ref/Metarchy-assets/
+
+# Local game data (pnpm start)
+.data/

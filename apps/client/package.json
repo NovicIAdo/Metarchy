@@ -1,0 +1,51 @@
+{
+  "name": "@metarchy/client",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc --noEmit && vite build",
+    "preview": "vite preview",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "build:theme": "tsx scripts/build-theme.ts",
+    "build:skins": "tsx scripts/build-skins.ts",
+    "build:headcrops": "tsx scripts/build-head-crops.ts",
+    "build:avatars": "tsx scripts/build-avatars.ts",
+    "build:arg-skins": "tsx scripts/build-arg-skins.ts",
+    "sync:rules": "tsx scripts/sync-rules.ts"
+  },
+  "dependencies": {
+    "@capacitor/android": "^8.4.1",
+    "@capacitor/app": "^8.1.0",
+    "@capacitor/browser": "^8.0.3",
+    "@capacitor/core": "^8.4.1",
+    "@capacitor/push-notifications": "^8.1.1",
+    "@metarchy/chain-solana": "workspace:*",
+    "@metarchy/engine": "workspace:*",
+    "@metarchy/protocol": "workspace:*",
+    "@sentry/react": "^10.66.0",
+    "@supabase/supabase-js": "^2.110.1",
+    "framer-motion": "^12.42.2",
+    "pixi.js": "^8.19.0",
+    "react": "^19.2.7",
+    "react-dom": "^19.2.7",
+    "react-router-dom": "^7.18.1",
+    "zustand": "^5.0.14"
+  },
+  "devDependencies": {
+    "@capacitor/cli": "^8.4.1",
+    "@testing-library/react": "^16.3.2",
+    "@testing-library/user-event": "^14.6.1",
+    "@types/react": "^19.2.17",
+    "@types/react-dom": "^19.2.3",
+    "@vitejs/plugin-react": "^5.2.0",
+    "jsdom": "^29.1.1",
+    "sharp": "^0.35.3",
+    "tsx": "^4.23.0",
+    "typescript": "^5.6.3",
+    "vite": "^7.3.6",
+    "vitest": "^3.2.7"
+  }
+}

@@ -1,0 +1,28 @@
+{
+  "name": "@metarchy/chain-solana",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts",
+    "./browser": "./src/browser.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@noble/curves": "2.4.0",
+    "@scure/base": "2.4.0",
+    "@solana-mobile/wallet-standard-mobile": "0.6.0",
+    "@solana/wallet-standard-features": "1.5.0",
+    "@solana/wallet-standard-util": "1.1.4",
+    "@wallet-standard/app": "1.1.1",
+    "@wallet-standard/base": "1.1.1",
+    "@wallet-standard/features": "1.1.1"
+  },
+  "devDependencies": {
+    "typescript": "^5.9.3",
+    "vitest": "^3.2.7"
+  }
+}

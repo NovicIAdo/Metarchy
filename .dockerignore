@@ -1,0 +1,20 @@
+**/node_modules
+**/dist
+.git
+docs
+architecture
+plan
+spec
+.github
+e2e/*
+!e2e/package.json
+# Client: only what `vite build` needs inside the image (no tests/scripts).
+apps/client/*
+!apps/client/package.json
+!apps/client/index.html
+!apps/client/vite.config.ts
+!apps/client/tsconfig.json
+!apps/client/.env.production
+!apps/client/src
+!apps/client/public
+.data

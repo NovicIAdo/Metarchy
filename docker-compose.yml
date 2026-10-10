@@ -1,0 +1,22 @@
+# docker compose up --build  →  http://localhost:8080
+# One container: the game server hosting the built client. Game data lives in
+# the named volume; accounts use the project's public Supabase Auth (URL and
+# anon key are public by design — the same values ship in the web client).
+services:
+  metarchy:
+    build:
+      context: .
+      dockerfile: infra/Dockerfile
+    ports:
+      - '8080:8080'
+    environment:
+      PORT: '8080'
+      DATABASE_URL: pglite:/data/metarchy
+      SUPABASE_URL: https://oakrtrjtihuxbjmmpfkg.supabase.co
+      SUPABASE_ANON_KEY: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9ha3J0cmp0aWh1eGJqbW1wZmtnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODM2NDE0MDcsImV4cCI6MjA5OTIxNzQwN30.FkYgy7_ES7evEEyLycaczfdTbse-FJrJF8UmMH9dGpY
+      SOLANA_AUTH_URL: http://localhost:8080/
+      SOLANA_AUTH_ALLOWED_ORIGINS: http://localhost:8080,http://127.0.0.1:8080
+    volumes:
+      - metarchy-data:/data
+volumes:
+  metarchy-data:

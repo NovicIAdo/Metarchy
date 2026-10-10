@@ -1,0 +1,75 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  ci:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm format
+      - run: pnpm lint
+      - run: pnpm typecheck
+      - run: pnpm test
+
+  # Browser e2e: the server hosts the production client build (same origin, the
+  # exact staging topology); Chromium plays a vs_bots game and a 2-browser PvP.
+  # Needs test accounts on the Auth project: set repository variable RUN_E2E=true
+  # and secrets SMOKE_EMAIL, SMOKE_PASSWORD, SMOKE_EMAIL_B, SMOKE_PASSWORD_B.
+  e2e:
+    if: ${{ vars.RUN_E2E == 'true' }}
+    runs-on: ubuntu-latest
+    env:
+      SMOKE_EMAIL: ${{ secrets.SMOKE_EMAIL }}
+      SMOKE_PASSWORD: ${{ secrets.SMOKE_PASSWORD }}
+      SMOKE_EMAIL_B: ${{ secrets.SMOKE_EMAIL_B }}
+      SMOKE_PASSWORD_B: ${{ secrets.SMOKE_PASSWORD_B }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm --filter @metarchy/e2e exec playwright install --with-deps chromium
+      - run: pnpm --filter @metarchy/client exec vite build
+      - name: Start server (pglite, hosts client dist)
+        run: |
+          STATIC_DIR="$PWD/apps/client/dist" \
+          DATABASE_URL='pglite:memory://' \
+          SUPABASE_URL='https://oakrtrjtihuxbjmmpfkg.supabase.co' \
+          SUPABASE_ANON_KEY="$(grep '^VITE_SUPABASE_ANON_KEY=' apps/client/.env.production | cut -d= -f2-)" \
+          TIMEOUT_SCALE=3 \
+          PORT=8080 pnpm --filter @metarchy/server exec tsx src/index.ts > "$RUNNER_TEMP/server.log" 2>&1 &
+          for i in $(seq 1 30); do
+            curl -sf http://127.0.0.1:8080/healthz && break
+            sleep 1
+          done
+      - name: vs_bots smoke
+        run: pnpm --filter @metarchy/e2e exec tsx scripts/client-smoke.ts
+        env:
+          SMOKE_URL: http://127.0.0.1:8080
+          SMOKE_BROWSER: chromium
+      - name: PvP smoke (two browsers)
+        run: pnpm --filter @metarchy/e2e exec tsx scripts/pvp-smoke.ts
+        env:
+          SMOKE_URL: http://127.0.0.1:8080
+          SMOKE_BROWSER: chromium
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: e2e-screenshots
+          path: |
+            e2e/screenshots/
+            ${{ runner.temp }}/server.log
+          retention-days: 7

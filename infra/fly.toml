@@ -1,0 +1,45 @@
+# Staging game server. Region fra pairs with the Supabase project in
+# eu-central-1 (Platform-Services.md §5 originally said lhr — updated).
+app = "metarchy-staging"
+primary_region = "fra"
+
+[build]
+  # Relative to this config file; the build context is the repo root (deploy '.').
+  dockerfile = "Dockerfile"
+
+[env]
+  HOST = "0.0.0.0"
+  PORT = "8080"
+  LOG_LEVEL = "info"
+  SOLANA_AUTH_URL = "https://metarchy-staging.fly.dev/"
+  SOLANA_AUTH_CHAIN_ID = "solana:devnet"
+  # Public key; the player bearer token authorizes Auth user lookups.
+  SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9ha3J0cmp0aWh1eGJqbW1wZmtnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODM2NDE0MDcsImV4cCI6MjA5OTIxNzQwN30.FkYgy7_ES7evEEyLycaczfdTbse-FJrJF8UmMH9dGpY"
+  # The Cloudflare custom domain fronts this same app; both origins sign in.
+  SOLANA_AUTH_ALLOWED_ORIGINS = "https://metarchy-staging.fly.dev,https://metarchy.posthuman.digital"
+  # DSN is public by design (the same value ships in the client bundle).
+  SENTRY_DSN = "https://3f801e2fcc00925628b19cf42f41cc7e@o4511751439908864.ingest.de.sentry.io/4511751882080336"
+
+# Fly scrapes this into the org's managed Prometheus/Grafana (fly-metrics.net).
+[metrics]
+  port = 8080
+  path = "/metrics"
+
+[http_service]
+  internal_port = 8080
+  force_https = true
+  # Rooms live in memory: never scale to zero mid-game.
+  auto_stop_machines = "off"
+  auto_start_machines = true
+  min_machines_running = 1
+
+  [[http_service.checks]]
+    interval = "15s"
+    timeout = "5s"
+    grace_period = "10s"
+    method = "GET"
+    path = "/healthz"
+
+[[vm]]
+  size = "shared-cpu-1x"
+  memory = "256mb"

@@ -1,0 +1,18 @@
+packages:
+  - 'packages/*'
+  - 'apps/*'
+  - 'e2e'
+allowBuilds:
+  esbuild: true
+# Only the browser export is used; Capacitor's Android bridge uses the Java SDK.
+# The protocol's React Native peer is optional for the browser export.
+packageExtensions:
+  '@solana-mobile/mobile-wallet-adapter-protocol@2.3.0':
+    peerDependenciesMeta:
+      react-native:
+        optional: true
+# Babel 7 requires this integrity-pinned legacy release. pnpm's chronology
+# check compares v6 against newer provenance-backed v7 releases (npm/node-semver#886).
+# Keep the exception confined to the exact existing version; all other checks apply.
+trustPolicyExclude:
+  - 'semver@6.3.1'

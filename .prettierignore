@@ -1,0 +1,4 @@
+# Generated files keep their generator's formatting.
+apps/client/src/theme.cyberpunk.gen.ts
+apps/client/android/
+pnpm-lock.yaml

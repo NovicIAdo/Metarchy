@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">Metarchy</string>
+    <string name="title_activity_main">Metarchy</string>
+    <string name="package_name">com.metarchy.game</string>
+    <string name="custom_url_scheme">com.metarchy.game</string>
+</resources>
